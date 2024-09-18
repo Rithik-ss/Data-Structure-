@@ -1,0 +1,308 @@
+#include <stdio.h>
+
+#include <stdlib.h>
+
+
+
+// Node structure
+
+struct Node {
+
+    int data;
+
+    struct Node* next;
+
+};
+
+
+
+// Function to create a new node
+
+struct Node* createNode(int data) {
+
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+
+    newNode->data = data;
+
+    newNode->next = NULL;
+
+    return newNode;
+
+}
+
+void insertAtFront(struct Node** head, int data) {
+
+    struct Node* newNode = createNode(data);
+
+    if (*head == NULL) {
+
+        *head = newNode;
+
+        newNode->next = *head;
+
+    } else {
+
+        struct Node* temp = *head;
+
+        while (temp->next != *head) {
+
+            temp = temp->next;
+
+        }
+
+        newNode->next = *head;
+
+        temp->next = newNode;
+
+        *head = newNode;
+
+    }
+
+}
+
+void insertAtMiddle(struct Node* head, int data, int position) {
+
+    struct Node* newNode = createNode(data);
+
+    struct Node* temp = head;
+
+    for (int i = 1; i < position - 1; i++) {
+
+        temp = temp->next;
+
+        if (temp->next == head) {
+
+            printf("Position out of bounds.\n");
+
+            return;
+
+        }
+
+    }
+
+    newNode->next = temp->next;
+
+    temp->next = newNode;
+
+}
+
+void insertAtEnd(struct Node** head, int data) {
+
+    struct Node* newNode = createNode(data);
+
+    if (*head == NULL) {
+
+        *head = newNode;
+
+        newNode->next = *head;
+
+    } else {
+
+        struct Node* temp = *head;
+
+        while (temp->next != *head) {
+
+            temp = temp->next;
+
+        }
+
+        temp->next = newNode;
+
+        newNode->next = *head;
+
+    }
+
+}
+
+void deleteFromFront(struct Node** head) {
+
+    if (*head == NULL) {
+
+        printf("List is empty.\n");
+
+        return;
+
+    }
+
+    struct Node* temp = *head;
+
+    struct Node* last = *head;
+
+
+
+    while (last->next != *head) {
+
+        last = last->next;
+
+    }
+
+
+
+    if (*head == (*head)->next) {
+
+        free(*head);
+
+        *head = NULL;
+
+    } else {
+
+        *head = (*head)->next;
+
+        last->next = *head;
+
+        free(temp);
+
+    }
+
+}
+
+void deleteFromMiddle(struct Node* head, int position) {
+
+    if (head == NULL) {
+
+        printf("List is empty.\n");
+
+        return;
+
+    }
+
+    struct Node* temp = head;
+
+    struct Node* prev;
+
+
+
+    for (int i = 1; i < position; i++) {
+
+        prev = temp;
+
+        temp = temp->next;
+
+        if (temp == head) {
+
+            printf("Position out of bounds.\n");
+
+            return;
+
+        }
+
+    }
+
+
+
+    prev->next = temp->next;
+
+    free(temp);
+
+}
+
+void deleteFromEnd(struct Node** head) {
+
+    if (*head == NULL) {
+
+        printf("List is empty.\n");
+
+        return;
+
+    }
+
+
+
+    struct Node* temp = *head;
+
+    struct Node* prev;
+
+
+
+    while (temp->next != *head) {
+
+        prev = temp;
+
+        temp = temp->next;
+
+    }
+
+
+
+    if (*head == (*head)->next) {
+
+        free(*head);
+
+        *head = NULL;
+
+    } else {
+
+        prev->next = *head;
+
+        free(temp);
+
+    }
+
+}
+
+void displayList(struct Node* head) {
+
+    if (head == NULL) {
+
+        printf("List is empty.\n");
+
+        return;
+
+    }
+
+
+
+    struct Node* temp = head;
+
+    do {
+
+        printf("%d -> ", temp->data);
+
+        temp = temp->next;
+
+    } while (temp != head);
+
+    printf("HEAD\n");
+
+}
+
+int main() {
+
+    struct Node* head = NULL;
+
+
+
+    insertAtFront(&head, 10);
+
+    insertAtEnd(&head, 20);
+
+    insertAtFront(&head, 5);
+
+    insertAtMiddle(head, 15, 3);
+
+    
+
+    printf("List after insertions:\n");
+
+    displayList(head);
+
+
+
+    deleteFromFront(&head);
+
+    deleteFromEnd(&head);
+
+    deleteFromMiddle(head, 2);
+
+
+
+    printf("List after deletions:\n");
+
+    displayList(head);
+
+
+
+    return 0;
+
+}
+
