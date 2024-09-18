@@ -1,0 +1,318 @@
+#include <stdio.h>
+
+#include <stdlib.h>
+
+
+
+typedef struct Node {
+
+    int data;
+
+    struct Node* next;
+
+    struct Node* prev;
+
+} Node;
+
+
+
+Node* head = NULL;  
+
+void insertFront(int data) {
+
+    Node* newNode = (Node*)malloc(sizeof(Node));
+
+    newNode->data = data;
+
+
+
+    if (head == NULL) {  
+
+        newNode->next = newNode;
+
+        newNode->prev = newNode;
+
+        head = newNode;
+
+    } else {
+
+        Node* last = head->prev;
+
+
+
+        newNode->next = head;
+
+        newNode->prev = last;
+
+
+
+        last->next = newNode;
+
+        head->prev = newNode;
+
+
+
+        head = newNode;
+
+    }
+
+}
+
+void insertEnd(int data) {
+
+    Node* newNode = (Node*)malloc(sizeof(Node));
+
+    newNode->data = data;
+
+
+
+    if (head == NULL) {  
+
+        newNode->next = newNode;
+
+        newNode->prev = newNode;
+
+        head = newNode;
+
+    } else {
+
+        Node* last = head->prev;
+
+
+
+        newNode->next = head;
+
+        newNode->prev = last;
+
+
+
+        last->next = newNode;
+
+        head->prev = newNode;
+
+    }
+
+}
+
+void insertMiddle(int data, int position) {
+
+    if (head == NULL) {
+
+        printf("The list is empty. Use insertFront or insertEnd.\n");
+
+        return;
+
+    }
+
+
+
+    Node* newNode = (Node*)malloc(sizeof(Node));
+
+    newNode->data = data;
+
+
+
+    Node* temp = head;
+
+    for (int i = 1; i < position && temp->next != head; i++) {
+
+        temp = temp->next;
+
+    }
+
+
+
+    Node* nextNode = temp->next;
+
+
+
+    newNode->next = nextNode;
+
+    newNode->prev = temp;
+
+
+
+    temp->next = newNode;
+
+    nextNode->prev = newNode;
+
+}
+
+void deleteFront() {
+
+    if (head == NULL) {
+
+        printf("The list is empty.\n");
+
+        return;
+
+    }
+
+
+
+    Node* last = head->prev;
+
+    Node* temp = head;
+
+
+
+    if (head->next == head) {  
+
+        head = NULL;
+
+    } else {
+
+        head = head->next;
+
+        head->prev = last;
+
+        last->next = head;
+
+    }
+
+
+
+    free(temp);
+
+}
+
+void deleteEnd() {
+
+    if (head == NULL) {
+
+        printf("The list is empty.\n");
+
+        return;
+
+    }
+
+
+
+    Node* last = head->prev;
+
+    Node* temp = last;
+
+
+
+    if (head->next == head) {  
+
+        head = NULL;
+
+    } else {
+
+        Node* secondLast = last->prev;
+
+        secondLast->next = head;
+
+        head->prev = secondLast;
+
+    }
+
+
+
+    free(temp);
+
+}
+
+void deleteMiddle(int position) {
+
+    if (head == NULL) {
+
+        printf("The list is empty.\n");
+
+        return;
+
+    }
+
+
+
+    Node* temp = head;
+
+    for (int i = 1; i < position && temp->next != head; i++) {
+
+        temp = temp->next;
+
+    }
+
+
+
+    if (temp == head) {
+
+        deleteFront();
+
+        return;
+
+    }
+
+
+
+    Node* prevNode = temp->prev;
+
+    Node* nextNode = temp->next;
+
+
+
+    prevNode->next = nextNode;
+
+    nextNode->prev = prevNode;
+
+
+
+    free(temp);
+
+}
+
+void display() {
+
+    if (head == NULL) {
+
+        printf("The list is empty.\n");
+
+        return;
+
+    }
+
+
+
+    Node* temp = head;
+
+    do {
+
+        printf("%d ", temp->data);
+
+        temp = temp->next;
+
+    } while (temp != head);
+
+    printf("\n");
+
+}
+
+int main() {
+
+    insertFront(10);
+
+    insertEnd(20);
+
+    insertFront(5);
+
+    insertMiddle(15, 2);
+
+    display(); 
+
+
+
+    deleteFront();
+
+    deleteEnd();
+
+    deleteMiddle(2);
+
+    display(); 
+
+
+
+    return 0;
+
+}
+
