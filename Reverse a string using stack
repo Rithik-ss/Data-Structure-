@@ -1,0 +1,94 @@
+#include<stdio.h>
+
+#include<string.h>
+
+#define max 20
+
+
+
+int top = -1;
+
+char stack[max];
+
+
+
+
+
+char input[max];
+
+
+
+void push(char c) {
+
+    if (top == max - 1) {
+
+        printf("Stack is full\n");
+
+    } else {
+
+        stack[++top] = c;
+
+    }
+
+}
+
+
+
+char pop() {
+
+    if (top == -1) {
+
+        printf("Stack is empty\n");
+
+        return '\0'; 
+
+    } else {
+
+        return stack[top--];
+
+    }
+
+}
+
+
+
+void main() {
+
+    printf("Enter the string: ");
+
+    
+
+    fgets(input, max, stdin);
+
+    
+
+    
+
+    input[strcspn(input, "\n")] = '\0';
+
+    
+
+    int i;
+
+    int len = strlen(input);
+
+    for (i = 0; i < len; i++) {
+
+        push(input[i]);
+
+    }
+
+    for (i = 0; i < len; i++) {
+
+        input[i] = pop();
+
+    }
+
+    printf("Reversed string: %s\n", input);
+
+}
+
+
+
+
+
