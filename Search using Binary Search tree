@@ -1,13 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
 struct Node {
     int data;
     struct Node* left;
     struct Node* right;
 };
-
 
 struct Node* createNode(int data) {
     struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
@@ -16,7 +14,6 @@ struct Node* createNode(int data) {
     newNode->right = NULL;
     return newNode;
 }
-
 
 struct Node* insert(struct Node* root, int data) {
     if (root == NULL) {
@@ -29,7 +26,6 @@ struct Node* insert(struct Node* root, int data) {
     return root;
 }
 
-
 struct Node* search(struct Node* root, int key) {
     if (root == NULL || root->data == key) {
         return root;
@@ -40,12 +36,27 @@ struct Node* search(struct Node* root, int key) {
     }
 }
 
-
 void inOrder(struct Node* root) {
     if (root != NULL) {
         inOrder(root->left);
         printf("%d ", root->data);
         inOrder(root->right);
+    }
+}
+
+void preOrder(struct Node* root) {
+    if (root != NULL) {
+        printf("%d ", root->data);
+        preOrder(root->left);
+        preOrder(root->right);
+    }
+}
+
+void postOrder(struct Node* root) {
+    if (root != NULL) {
+        postOrder(root->left);
+        postOrder(root->right);
+        printf("%d ", root->data);
     }
 }
 
@@ -61,6 +72,14 @@ int main() {
 
     printf("In-order traversal of the Binary Search Tree: ");
     inOrder(root);
+    printf("\n");
+
+    printf("Pre-order traversal of the Binary Search Tree: ");
+    preOrder(root);
+    printf("\n");
+
+    printf("Post-order traversal of the Binary Search Tree: ");
+    postOrder(root);
     printf("\n");
 
     int key = 60;
