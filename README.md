@@ -1,0 +1,1 @@
+A collection of basic data structure implementations in C, including arrays, linked lists, stacks, queues, trees, and more. Each structure comes with essential operations to help learners understand and practice data structures using C programming.
